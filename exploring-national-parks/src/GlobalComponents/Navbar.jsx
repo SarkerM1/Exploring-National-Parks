@@ -9,10 +9,14 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import '../Style/navbar.css'
 import tree from './tree.png'
+import NavbarWeather from './NavbarWeather'
 const Navbar = () => {
+    // const temperature = FetchWeather(19440)
+
     return (
         <nav className="nav-bar">
             <ul>
+                <li><NavbarWeather /></li>
                 <li className = "header">
                     <NavLink to="/">Exploring National Parks</NavLink>
                 </li>
