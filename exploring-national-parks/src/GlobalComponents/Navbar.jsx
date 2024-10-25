@@ -16,7 +16,7 @@ const Navbar = () => {
         <nav className="nav-bar">
             <ul>
                 <li className = "header">
-                    <NavLink to="/"><NavbarWeather showCity={false}/></NavLink>
+                    <NavLink to="/"><NavbarWeather showCity={true}/></NavLink>
                 </li>
                 <li className = "header">
                     <NavLink to="/">Exploring National Parks</NavLink>
