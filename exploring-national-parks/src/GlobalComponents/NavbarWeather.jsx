@@ -9,7 +9,8 @@ const NavbarWeather = ({zipCode, showCity}) => {
     useEffect(() => {
         const fetchCoordinates = async () => {
             try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${API_KEY}`);
+                // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=${API_KEY}`);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},us&appid=e037792b7fc837ca0d4efd6d47a3671e`);
                 const data = await response.json();
 
                 if (data.coord) {
@@ -25,38 +26,40 @@ const NavbarWeather = ({zipCode, showCity}) => {
             }
         };
         const fetchCurrentLocation = async () => {
-            let lat;
-            let lon;
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        lat = position.coords.latitude;
-                        lon = position.coords.longitude;
-                        console.log(`Global Latitude: ${lat}, Global Longitude: ${lon}`);
-                    },
-                    (err) => {
-                        console.error(err.message);
-                    }
-                );
-            } else {
+            if (!navigator.geolocation) {
                 console.error("Geolocation is not supported by this browser.");
+                return;
             }
-            try {
-                const response = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`);
-                const data = await response.json();
-
-                if (data.name) {
-                    setCity(data.name)
-                } else {
-                    console.error("Invalid response data:", data);
+        
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+        
+                    try {
+                        // const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`);
+                        const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=e037792b7fc837ca0d4efd6d47a3671e`);
+                        const data = await response.json();
+        
+                        if (data.length > 0 && data[0].name) {
+                            setCity(data[0].name);
+                            fetchTemperature(lat, lon);
+                        } else {
+                            console.error("Invalid response data:", data);
+                        }
+                    } catch (error) {
+                        console.error("Error fetching coordinates:", error);
+                    }
+                },
+                (error) => {
+                    console.error("Error getting geolocation:", error.message);
                 }
-            } catch (error) {
-                console.error("Error fetching coordinates:", error);
-            }
+            );
         };
         const fetchTemperature = async (lat, lon) => {
             try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+                // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=e037792b7fc837ca0d4efd6d47a3671e`);
                 const data = await response.json();
 
                 if(data.main){
@@ -74,7 +77,8 @@ const NavbarWeather = ({zipCode, showCity}) => {
 
         if(zipCode){
             fetchCoordinates();
-        }else{
+        }
+        else{
             fetchCurrentLocation();
         }
     }, [zipCode, API_KEY]);
