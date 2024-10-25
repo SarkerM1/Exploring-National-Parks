@@ -14,7 +14,7 @@
 }
 
 .nav-bar ul li{
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     &:hover{
         background-color:#a67e46
     }
@@ -49,4 +49,20 @@
         background-color: #3a4937;
     }
 
+}
+
+.temperature {
+    display:block;
+    font-size: 1.2rem;
+    color:white;
+    font-weight: bold;
+    margin: 2px 0;
+}
+
+.city {
+    display:block;
+    font-size: 0.8rem;
+    color:white;
+    font-weight: normal;
+    margin: 2px 0;
 }

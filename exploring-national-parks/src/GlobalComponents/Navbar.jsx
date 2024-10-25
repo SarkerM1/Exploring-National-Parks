@@ -9,10 +9,15 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import '../Style/navbar.css'
 import tree from './tree.png'
+import NavbarWeather from './NavbarWeather'
 const Navbar = () => {
+
     return (
         <nav className="nav-bar">
             <ul>
+                <li className = "header">
+                    <NavLink to="/"><NavbarWeather showCity={true}/></NavLink>
+                </li>
                 <li className = "header">
                     <NavLink to="/">Exploring National Parks</NavLink>
                 </li>
