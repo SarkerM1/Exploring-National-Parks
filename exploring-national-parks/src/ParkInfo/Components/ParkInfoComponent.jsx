@@ -95,9 +95,10 @@ function ParkInfoComponent() {
                         <div key={park.id} className="parkInfo" style={{ backgroundImage: 'url(' + park.images[0].url + ')', backgroundSize: 'auto' }}>
                             <div className='park-info-welcome'>
                                 <center>
-                                    <ParkWeather city={park.addresses[0].city} stateCode={park.addresses[0].stateCode}/>
+
                                     <h1 id="info-title">{park.fullName}</h1>
                                     <h2>Park Information</h2>
+                                    <ParkWeather city={park.addresses[0].city} stateCode={park.addresses[0].stateCode}/>
                                     <address>{park.addresses[0].line1}<br></br>
                                         {park.addresses[0].city}, 
                                         {park.addresses[0].stateCode}<br></br>

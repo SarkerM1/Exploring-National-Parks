@@ -53,7 +53,7 @@ const ParkWeather = ({city, stateCode}) => {
 
     return (
     <div>
-        <span className="temperature">{temperature} °F</span>
+        <span className="temperaturePark">{temperature} °F</span>
     </div>
     );
 };
