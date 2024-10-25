@@ -24,6 +24,36 @@ const NavbarWeather = ({zipCode, showCity}) => {
                 console.error("Error fetching coordinates:", error);
             }
         };
+        const fetchCurrentLocation = async () => {
+            let lat;
+            let lon;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        lat = position.coords.latitude;
+                        lon = position.coords.longitude;
+                        console.log(`Global Latitude: ${lat}, Global Longitude: ${lon}`);
+                    },
+                    (err) => {
+                        console.error(err.message);
+                    }
+                );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+            try {
+                const response = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`);
+                const data = await response.json();
+
+                if (data.name) {
+                    setCity(data.name)
+                } else {
+                    console.error("Invalid response data:", data);
+                }
+            } catch (error) {
+                console.error("Error fetching coordinates:", error);
+            }
+        };
         const fetchTemperature = async (lat, lon) => {
             try {
                 const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
@@ -41,8 +71,11 @@ const NavbarWeather = ({zipCode, showCity}) => {
             }
         };
 
+
         if(zipCode){
             fetchCoordinates();
+        }else{
+            fetchCurrentLocation();
         }
     }, [zipCode, API_KEY]);
 
