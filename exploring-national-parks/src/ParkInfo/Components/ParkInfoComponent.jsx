@@ -11,6 +11,9 @@ import React, { useState, useEffect } from 'react';
 import { ParkInfo } from '../Functionality/ParkInfo'; // Importing the functionality
 import '../../Style/parkInfo.css';
 import ParkVideos from './ParkVideos';
+import Navbar from "../../GlobalComponents/Navbar";
+import NavbarWeather from "../../GlobalComponents/NavbarWeather";
+import ParkWeather from "./ParkWeather";
 
 function ParkInfoComponent() {
     const [parkJSON, setParks] = useState([]);
@@ -92,6 +95,7 @@ function ParkInfoComponent() {
                         <div key={park.id} className="parkInfo" style={{ backgroundImage: 'url(' + park.images[0].url + ')', backgroundSize: 'auto' }}>
                             <div className='park-info-welcome'>
                                 <center>
+                                    <ParkWeather city={park.addresses[0].city} stateCode={park.addresses[0].stateCode}/>
                                     <h1 id="info-title">{park.fullName}</h1>
                                     <h2>Park Information</h2>
                                     <address>{park.addresses[0].line1}<br></br>
