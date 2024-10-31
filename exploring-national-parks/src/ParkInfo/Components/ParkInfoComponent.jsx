@@ -98,12 +98,12 @@ function ParkInfoComponent() {
 
                                     <h1 id="info-title">{park.fullName}</h1>
                                     <h2>Park Information</h2>
-                                    <ParkWeather city={park.addresses[0].city} stateCode={park.addresses[0].stateCode}/>
                                     <address>{park.addresses[0].line1}<br></br>
                                         {park.addresses[0].city}, 
                                         {park.addresses[0].stateCode}<br></br>
                                     </address>
                                     <br></br>
+                                    <ParkWeather city={park.addresses[0].city} stateCode={park.addresses[0].stateCode}/>
                                 </center>
                             </div>
 

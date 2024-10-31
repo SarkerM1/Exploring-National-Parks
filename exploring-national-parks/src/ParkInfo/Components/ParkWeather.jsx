@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 
 const ParkWeather = ({city, stateCode}) => {
     const [temperature, setTemperature] = useState(null);
+    const [feelLike, setFeel] = useState(null);
+    const [forcast, setWeather] = useState(null);
+    const [humidity, setHumidity] = useState(null);
+    const [wind, setWind] = useState(null);
     const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY;;
 
     useEffect(() => {
@@ -30,7 +34,12 @@ const ParkWeather = ({city, stateCode}) => {
                 const data = await response.json();
 
                 if(data.main){
-                    var t = ((data.main.temp - 273.15) * 1.8) + 32
+                    var t = ((data.main.temp - 273.15) * 1.8) + 32;
+                    var f = ((data.main.feels_like - 273.15) * 1.8) + 32;
+                    setWeather(data.weather[0].main);
+                    setFeel(f.toFixed(0));
+                    setHumidity(data.main.humidity);
+                    setWind((data.wind.speed).toFixed(1));
                     setTemperature(t.toFixed(0));
                 } else {
                     console.error("Invalid response data:", data)
@@ -53,7 +62,12 @@ const ParkWeather = ({city, stateCode}) => {
 
     return (
     <div>
-        <span className="temperaturePark">{temperature} °F</span>
+        <span className="weatherTitle">WEATHER</span> <br></br>
+        <span className="weatherPark">Weather: {forcast}</span><br></br>
+        <span className="temperaturePark">Temperature: {temperature} °F</span> <br></br>
+        <span className="temperaturePark">Feel Like: {feelLike} °F</span> <br></br>
+        <span className="temperaturePark">Humidity: {humidity} %</span> <br></br>
+        <span className="temperaturePark">Wind: {wind} mph</span> <br></br>
     </div>
     );
 };
